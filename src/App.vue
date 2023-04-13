@@ -1,8 +1,10 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <ScrollBox></ScrollBox>
 </template>
 
-<script setup></script>
+<script setup>
+import ScrollBox from "./components/ScrollBox.vue";
+</script>
 
 <style>
 #app {
@@ -12,5 +14,9 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-direction: row;
+  gap: 10vw;
+  padding-inline: 5vw;
 }
 </style>
