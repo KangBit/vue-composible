@@ -1,9 +1,15 @@
 import { onMounted, onUnmounted, ref, unref } from "vue";
+import type { Ref } from "vue";
 
-export const useScrollLoad = (scrollContainer, url) => {
+type ContainerType = HTMLElement | Window | Document | null;
+
+export const useScrollLoad = (
+  scrollContainer: ContainerType | Ref<ContainerType>,
+  url: (start: number, size: number) => string
+) => {
   const size = 10;
 
-  const list = ref([]);
+  const list: Ref<any[]> = ref([]);
   const start = ref(0);
 
   const load = () => {
@@ -23,7 +29,7 @@ export const useScrollLoad = (scrollContainer, url) => {
       });
   };
 
-  const getScrollRest = (element) => {
+  const getScrollRest = (element: HTMLElement) => {
     const clientHeight = element.clientHeight;
     const scrollHeight = element.scrollHeight;
     const scrollTop = element.scrollTop;
@@ -31,10 +37,10 @@ export const useScrollLoad = (scrollContainer, url) => {
     return scrollHeight - scrollTop - clientHeight;
   };
 
-  const handleScrollEvent = (e) => {
-    let element = e.target;
-    if (element.documentElement) {
-      element = element.documentElement;
+  const handleScrollEvent = (e: Event) => {
+    let element = e.target as HTMLElement;
+    if ((e.target as Document).documentElement) {
+      element = (e.target as Document).documentElement as HTMLElement;
     }
 
     const bottom = getScrollRest(element);
