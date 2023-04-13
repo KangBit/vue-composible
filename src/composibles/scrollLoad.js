@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, ref, unref } from "vue";
 
-export const useScrollLoad = (target, url) => {
+export const useScrollLoad = (scrollContainer, url) => {
   const size = 10;
 
   const list = ref([]);
@@ -32,28 +32,32 @@ export const useScrollLoad = (target, url) => {
   };
 
   const handleScrollEvent = (e) => {
-    const bottom = getScrollRest(e.target);
+    let element = e.target;
+    if (element.documentElement) {
+      element = element.documentElement;
+    }
 
+    const bottom = getScrollRest(element);
     if (bottom === 0) {
       loadMore();
     }
   };
 
   onMounted(() => {
-    if (!target.value) {
-      return;
-    }
+    const element = unref(scrollContainer);
 
-    load();
-    target.value.addEventListener("scroll", handleScrollEvent);
+    if (element) {
+      load();
+      element.addEventListener("scroll", handleScrollEvent);
+    }
   });
 
   onUnmounted(() => {
-    if (!target.value) {
-      return;
-    }
+    const element = unref(scrollContainer);
 
-    target.value.removeEventListener("scroll", handleScrollEvent);
+    if (element) {
+      element.removeEventListener("scroll", handleScrollEvent);
+    }
   });
 
   return { list };

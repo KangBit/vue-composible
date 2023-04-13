@@ -12,7 +12,7 @@ import { ref } from "vue";
 
 const scrollContainer = ref(null);
 
-const { list } = useScrollLoad(scrollContainer, (start, size) => {
+const { list } = useScrollLoad(window, (start, size) => {
   return `https://jsonplaceholder.typicode.com/todos?_start=${start}&_limit=${size}`;
 });
 </script>
@@ -20,8 +20,8 @@ const { list } = useScrollLoad(scrollContainer, (start, size) => {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  border: 1px solid black;
-  overflow-y: scroll;
+  /* border: 1px solid black; */
+  /* overflow-y: scroll; */
   width: 80vw;
   height: 90vh;
 }
