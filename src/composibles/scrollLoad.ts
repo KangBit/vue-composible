@@ -3,13 +3,13 @@ import type { Ref } from "vue";
 
 type ContainerType = HTMLElement | Window | Document | null;
 
-export const useScrollLoad = (
+export const useScrollLoad = <ListItem>(
   scrollContainer: ContainerType | Ref<ContainerType>,
   url: (start: number, size: number) => string
 ) => {
   const size = 10;
 
-  const list: Ref<any[]> = ref([]);
+  const list: Ref<ListItem[]> = ref([]);
   const start = ref(0);
 
   const load = () => {

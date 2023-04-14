@@ -6,13 +6,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useScrollLoad } from "@/composibles/scrollLoad";
 import { ref } from "vue";
 
+type ListItem = {
+  id: number;
+  userId: number;
+  title: string;
+  completed: boolean;
+};
+
 const scrollContainer = ref(null);
 
-const { list } = useScrollLoad(window, (start, size) => {
+const { list } = useScrollLoad<ListItem>(window, (start, size) => {
   return `https://jsonplaceholder.typicode.com/todos?_start=${start}&_limit=${size}`;
 });
 </script>
