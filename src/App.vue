@@ -16,7 +16,7 @@ import ScrollBox from "./components/ScrollBox.vue";
   margin-top: 60px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 10vw;
-  padding-inline: 5vw;
 }
 </style>
