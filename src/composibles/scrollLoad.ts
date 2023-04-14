@@ -11,21 +11,33 @@ export const useScrollLoad = <ListItem>(
 
   const list: Ref<ListItem[]> = ref([]);
   const start = ref(0);
+  const isLoading = ref(false);
 
   const load = () => {
     fetchData();
   };
 
   const loadMore = () => {
+    if (isLoading.value) {
+      return;
+    }
+
     start.value = start.value + size;
     load();
   };
 
   const fetchData = () => {
+    isLoading.value = true;
     fetch(url(start.value, size))
       .then((res) => res.json())
       .then((res) => {
         list.value.push(...res);
+      })
+      .catch((err) => {
+        start.value = start.value - size;
+      })
+      .finally(() => {
+        isLoading.value = false;
       });
   };
 
@@ -44,7 +56,7 @@ export const useScrollLoad = <ListItem>(
     }
 
     const bottom = getScrollRest(element);
-    if (bottom === 0) {
+    if (bottom < element.clientHeight * 2) {
       loadMore();
     }
   };
